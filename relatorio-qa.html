@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mystic Bakery - Dashboard de Testes QA</title>
+  <script src="https://jsdelivr.net"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background: linear-gradient(135deg, #120d16 0%, #241326 100%);
+      color: #f5f5f5;
+      padding: 30px 20px;
+      min-height: 100vh;
+    }
+    .container { max-width: 1000px; margin: 0 auto; }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #3d2440;
+      padding-bottom: 20px;
+    }
+    header h1 { color: #ff4d6d; font-size: 2rem; margin-bottom: 5px; }
+    header p { color: #cbb2cc; }
+
+    /* Cards de Resumo */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .card {
+      background: #1e1624;
+      border: 1px solid #382542;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .card h3 { font-size: 0.9rem; color: #b8a3ba; text-transform: uppercase; margin-bottom: 8px; }
+    .card .numero { font-size: 2.2rem; font-weight: bold; }
+    .verde { color: #2ecc71; }
+    .vermelho { color: #ff4d6d; }
+    .roxo { color: #c77dff; }
+
+    /* Área dos Gráficos */
+    .graficos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .box-grafico {
+      background: #1e1624;
+      border: 1px solid #382542;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .box-grafico h2 { font-size: 1.1rem; margin-bottom: 15px; text-align: center; color: #e0aaff; }
+
+    /* Tabela Resumo */
+    .tabela-box {
+      background: #1e1624;
+      border: 1px solid #382542;
+      border-radius: 12px;
+      padding: 20px;
+      overflow-x: auto;
+      margin-bottom: 30px;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 12px; border-bottom: 1px solid #33203b; font-size: 0.92rem; }
+    th { color: #e0aaff; }
+    .badge-pass {
+      background: rgba(46, 204, 113, 0.15);
+      color: #2ecc71;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    /* Botão Voltar */
+    .btn-voltar {
+      display: inline-block;
+      background: #9d4edd;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn-voltar:hover { background: #7b2cbf; }
+    .centro { text-align: center; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>🦇 Mystic Bakery — Relatório de Qualidade (QA)</h1>
+      <p>Resultados da Suíte Automatizada com Jest & JSDOM (script.test.js)</p>
+    </header>
+
+    <!-- Cards de Métricas -->
+    <section class="cards">
+      <div class="card">
+        <h3>Total de Testes</h3>
+        <div class="numero roxo">9</div>
+      </div>
+      <div class="card">
+        <h3>Aprovados (PASS)</h3>
+        <div class="numero verde">9</div>
+      </div>
+      <div class="card">
+        <h3>Falhas (FAIL)</h3>
+        <div class="numero vermelho">0</div>
+      </div>
+      <div class="card">
+        <h3>Taxa de Sucesso</h3>
+        <div class="numero verde">100%</div>
+      </div>
+    </section>
+
+    <!-- Gráficos -->
+    <section class="graficos">
+      <div class="box-grafico">
+        <h2>Status Geral da Execução</h2>
+        <canvas id="graficoStatus"></canvas>
+      </div>
+      <div class="box-grafico">
+        <h2>Cobertura por Tipo de Teste</h2>
+        <canvas id="graficoCategorias"></canvas>
+      </div>
+    </section>
+
+    <!-- Lista dos 9 Casos -->
+    <section class="tabela-box">
+      <h2 style="margin-bottom: 15px; color: #e0aaff;">Detalhamento dos Casos de Teste</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cenário Testado</th>
+            <th>Categoria</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>CT-01</strong></td><td>Cadastro completo e download do arquivo .txt</td><td>Fluxo Principal</td><td><span class="badge-pass">PASSOU ✅</span></td></tr>
+          <tr><td><strong>CT-02</strong></td><td>Bloqueio de campo Nome obrigatório vazio</td><td>Validação</td><td><span class="badge-pass">PASSOU ✅</span></td></tr>
+          <tr><td><strong>CT-03</strong></td><td>Validação de formato de e-mail sem @</td><td>Validação</td><td><span class="badge-pass">PASSOU ✅</span></td></tr>
+          <tr><td><strong>CT-04</strong></td><td>Seleção única de turno (Radio Button)</td><td>Interface (UI)</td><td><span class="badge-pass">PASSOU ✅</span></td></tr>
+          <tr><td><strong>CT-05</strong></td><td>Bloqueio de salário negativo (min="0")</td><td>Validação</td><td><span class="badge-pass">PASSOU ✅</span></td></tr>
+          <tr><td><strong>CT-06</strong></td><td>Bloqueio quando nenhum Cargo é selecionado</td><td>Validação</td><td><span class="badge-pass">PASSOU ✅</span></td></tr>
+          <tr><td><strong>CT-07</strong></td><td>Bloqueio de campo Telefone obrigatório vazio</td><td>Validação</td><td><span class="badge-pass">PASSOU ✅</span></td></tr>
+          <tr><td><strong>CT-08</strong></td><td>Renderização automática da data no rodapé</td><td>DOM / Script</td><td><span class="badge-pass">PASSOU ✅</span></td></tr>
+          <tr><td><strong>CT-09</strong></td><td>Proteção contra injeção de script (XSS)</td><td>Segurança QA</td><td><span class="badge-pass">PASSOU ✅</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="centro">
+      <a href="index.html" class="btn-voltar">⬅️ Voltar para o Cadastro de Funcionários</a>
+    </div>
+  </div>
+
+  <script>
+    // Gráfico 1: Rosca (Passou vs Falhou)
+    new Chart(document.getElementById('graficoStatus'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Passou (9)', 'Falhou (0)'],
+        datasets: [{
+          data: [9, 0],
+          backgroundColor: ['#2ecc71', '#ff4d6d'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        plugins: { legend: { labels: { color: '#f5f5f5' } } }
+      }
+    });
+
+    // Gráfico 2: Barras por Categoria
+    new Chart(document.getElementById('graficoCategorias'), {
+      type: 'bar',
+      data: {
+        labels: ['Validação', 'Fluxo', 'UI', 'DOM', 'Segurança'],
+        datasets: [{
+          label: 'Testes Aprovados',
+          data: [9, 0, 0, 0, 0],
+          backgroundColor: '#9d4edd',
+          borderRadius: 6
+        }]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: true, ticks: { stepSize: 1, color: '#cbb2cc' } },
+          x: { ticks: { color: '#cbb2cc' } }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
+  </script>
+</body>
+</html>
